@@ -79,75 +79,81 @@ def get_tile_color(value):
 
 
 
-def draw_nodes_with_colors(screen, linked_list):
+def draw_nodes_with_colors(screen, linkedList):
     
-    current1 = linked_list.head1.next
+    current = linkedList.head.next
     cell_size = 117
     font = pygame.font.Font(None, 40)
 
-    while current1 != None:
-        x, y = get_cell_position(current1.number)
+    while current != None:
+        x, y = get_cell_position(current.number)
 
-        color = get_tile_color(current1.value)
+        color = get_tile_color(current.value)
         pygame.draw.rect(screen, color, (x, y, cell_size, cell_size))
 
-        text = font.render(str(current1.value), True, BLACK)
+        text = font.render(str(current.value), True, BLACK)
         text_rect = text.get_rect(center=(x + cell_size // 2, y + cell_size // 2))
         screen.blit(text, text_rect)
 
-        current1 = current1.next
+        current = current.next
         
-        
-        
-    current2 = linked_list.head2.next
-    cell_size = 117
-    font = pygame.font.Font(None, 40)
-
-    while current2 != None:
-        x, y = get_cell_position(current2.number)
-
-        color = get_tile_color(current2.value)
-        pygame.draw.rect(screen, color, (x, y, cell_size, cell_size))
-
-        text = font.render(str(current2.value), True, BLACK)
-        text_rect = text.get_rect(center=(x + cell_size // 2, y + cell_size // 2))
-        screen.blit(text, text_rect)
-
-        current2 = current2.next
         
     
-    current3 = linked_list.head3.next
+    current = linkedList.head.down.next
+    
     cell_size = 117
     font = pygame.font.Font(None, 40)
 
-    while current3 != None:
-        x, y = get_cell_position(current3.number)
+    while current != None:
+        x, y = get_cell_position(current.number)
 
-        color = get_tile_color(current3.value)
+        color = get_tile_color(current.value)
         pygame.draw.rect(screen, color, (x, y, cell_size, cell_size))
 
-        text = font.render(str(current3.value), True, BLACK)
+        text = font.render(str(current.value), True, BLACK)
         text_rect = text.get_rect(center=(x + cell_size // 2, y + cell_size // 2))
         screen.blit(text, text_rect)
 
-        current3 = current3.next
+        current = current.next
         
-        
-    current4 = linked_list.head4.next
+    
+    
+    current = linkedList.head.down.down.next
+    
     cell_size = 117
     font = pygame.font.Font(None, 40)
 
-    while current4 != None:
-        x, y = get_cell_position(current4.number)
+    while current != None:
+        x, y = get_cell_position(current.number)
 
-        color = get_tile_color(current4.value)
+        color = get_tile_color(current.value)
         pygame.draw.rect(screen, color, (x, y, cell_size, cell_size))
 
-        text = font.render(str(current4.value), True, BLACK)
+        text = font.render(str(current.value), True, BLACK)
         text_rect = text.get_rect(center=(x + cell_size // 2, y + cell_size // 2))
         screen.blit(text, text_rect)
 
-        current4 = current4.next
+        current = current.next
+        
+        
+        
+        
+    current = linkedList.head.down.down.down.next
+    
+    cell_size = 117
+    font = pygame.font.Font(None, 40)
+
+    while current != None:
+        x, y = get_cell_position(current.number)
+
+        color = get_tile_color(current.value)
+        pygame.draw.rect(screen, color, (x, y, cell_size, cell_size))
+
+        text = font.render(str(current.value), True, BLACK)
+        text_rect = text.get_rect(center=(x + cell_size // 2, y + cell_size // 2))
+        screen.blit(text, text_rect)
+
+        current = current.next
 
 
 
