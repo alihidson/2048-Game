@@ -198,12 +198,13 @@ LIGHT_BROWN = (255, 222, 162)
 
 
 game = LinkedList()
-game.add_node(5, 2)
-game.add_node(9, 4)
-game.add_node(14, 8)
+# game.add_node(5, 2)
+# game.add_node(9, 4)
+# game.add_node(14, 8)
 
 
 Play = True
+sw_random_append = True
 while Play:
     
     event = pygame.event.wait()
@@ -220,15 +221,15 @@ while Play:
     # Generate a random choice with the given probabilities
     value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
     
-    # sw = 1
-    # while sw == 1:
+    
+    while sw_random_append == True:
         
         # Generate a random integer between 1 and 16 (inclusive)
-        # node_number_created_with_chance = random.randint(1, 16)
+        node_number_created_with_chance = random.randint(1, 16)
         
-        # if check_node_empty(node_number_created_with_chance) == True:
-        #     game.add_node(node_number_created_with_chance, value_created_with_chance)
-        #     sw = 0
+        if game.check_node_empty(node_number_created_with_chance) == True:
+            game.add_node(node_number_created_with_chance, value_created_with_chance)
+            sw_random_append = False
         
         
         
