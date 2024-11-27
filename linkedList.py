@@ -2,21 +2,42 @@ from node import Node
 
 class LinkedList:
     def __init__(self):
-        self.head = Node(0, -1) # number == 0 and value == -1 for head1
+        self.head = Node(0, -1) # create head
         
-        self.head.down = Node(0, -1)
-        self.head.down.up = self.head
-        self.head = self.head.down
+        # create nodes for rows
+        self.row1 = Node(0, -1)
+        self.head.down = self.row1
+        self.row1.up = self.head
         
-        self.head.down = Node(0, -1)
-        self.head.down.up = self.head
-        self.head = self.head.down
+        self.row2 = Node(0, -1)
+        self.row1.down = self.row2
+        self.row2.up = self.row1
         
-        self.head.down = Node(0, -1)
-        self.head.down.up = self.head
-        self.head = self.head.down
+        self.row3 = Node(0, -1)
+        self.row2.down = self.row3
+        self.row3.up = self.row2
         
-        self.head = self.head.up.up.up
+        self.row4 = Node(0, -1)
+        self.row3.down = self.row4
+        self.row4.up = self.row3
+        
+        
+        # create nodes for columns
+        self.col1 = Node(0, -1)
+        self.head.next = self.col1
+        self.col1.prev = self.head
+        
+        self.col2 = Node(0, -1)
+        self.col1.next = self.col2
+        self.col2.prev = self.col1
+        
+        self.col3 = Node(0, -1)
+        self.col2.next = self.col3
+        self.col3.prev = self.col2
+        
+        self.col4 = Node(0, -1)
+        self.col3.next = self.col4
+        self.col4.prev = self.col3
         
         
         
@@ -24,7 +45,7 @@ class LinkedList:
     def add_node(self, number, value):
         
         newNode = Node(number, value)
-        current = self.head
+        current = self.row1
         
         if 1 <= number and number <= 4:
             if current.next == None:
@@ -154,4 +175,11 @@ class LinkedList:
                 return True
         
         
+
+# def move_right(self):
+#     current = self.head.next
+    
+#     if current.value == current.next.value:
+#         current.next.value += current.value
         
+    

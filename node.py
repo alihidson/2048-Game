@@ -4,6 +4,6 @@ class Node:
         self.value = value
         self.up = None
         self.down = None
-        self.past = None
+        self.prev = None
         self.next = None
     
