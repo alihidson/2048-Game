@@ -82,7 +82,7 @@ def get_tile_color(value):
 def draw_nodes_with_colors(screen, linkedList):
     
     current = linkedList.head.next
-    cell_size = 117
+    cell_size = 115
     font = pygame.font.Font(None, 40)
 
     while current != None:
@@ -129,10 +129,15 @@ Play = True
 sw_random_append = True
 while Play:
     
+    pygame.event.pump()
+    
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
         Play = False
         
+    elif event.type == pygame.KEYUP:
+        game.move_up()
+        # sw_random_append = True
     
     
 
@@ -146,11 +151,19 @@ while Play:
     
     while sw_random_append == True:
         
+        attempts = 0
+        maxAttempts = 50
+        
         # Generate a random integer between 1 and 16 (inclusive)
         node_number_created_with_chance = random.randint(1, 16)
         
         if game.check_node_empty(node_number_created_with_chance) == True:
             game.add_node(node_number_created_with_chance, value_created_with_chance)
+            sw_random_append = False
+        
+        attempts += 1
+        # avoid to infinity loop
+        if attempts > maxAttempts:
             sw_random_append = False
         
         
