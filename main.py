@@ -130,17 +130,25 @@ sw_random_append = True
 while Play:
     
     pygame.event.pump()
-    
+
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
         Play = False
         
-    elif event.type == pygame.KEYUP:
-        game.move_up()
-        # sw_random_append = True
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_UP:
+            game.move_up()
+            
+        elif event.key == pygame.K_DOWN:
+            game.move_down()
+            
+        # elif event.key == pygame.K_LEFT:
+        #     game.move_left()
+        #
+        # elif event.key == pygame.K_RIGHT:
+        #     game.move_right()
     
     
-
     # Define the numbers and their corresponding probabilities
     numbers = [2, 4]
     weights = [70, 30]

@@ -44,14 +44,24 @@ class LinkedList:
             return True
         
         
+        
+    def remove_zero_nodes(self):
+        current = self.head.next
+        while current:
+            if current.value == 0:
+                current.prev.next = current.next
+                if current.next:
+                    current.next.prev = current.prev
+            current = current.next
+        
+        
+        
+        
     def move_up(self):
         for col_start in range(1, 5):
-            first = None
-            second = None
-            third = None
-            fourth = None
-
+            first, second, third, fourth = None, None, None, None
             current = self.head.next
+
             while current:
                 if current.number == col_start:
                     first = current
@@ -73,19 +83,52 @@ class LinkedList:
                 third.value += fourth.value
                 fourth.value = 0
 
-
             next_position = col_start
             for node in [first, second, third, fourth]:
                 if node and node.value != 0:
                     node.number = next_position
                     next_position += 4
 
+        self.remove_zero_nodes()
+        
+        
+    
+    
+    def move_down(self):
+        for col_start in range(1, 5):
+            first = None
+            second = None
+            third = None
+            fourth = None
+            
+            current = self.head.next
 
-        current = self.head.next
-        while current:
-            if current.value == 0:
-                current.prev.next = current.next
-                if current.next != None:
-                    current.next.prev = current.prev
-            current = current.next
+            while current:
+                if current.number == col_start:
+                    first = current
+                elif current.number == col_start + 4:
+                    second = current
+                elif current.number == col_start + 8:
+                    third = current
+                elif current.number == col_start + 12:
+                    fourth = current
+                current = current.next
+
+            if fourth and third and fourth.value == third.value:
+                fourth.value += third.value
+                third.value = 0
+            if third and second and third.value == second.value:
+                third.value += second.value
+                second.value = 0
+            if second and first and second.value == first.value:
+                second.value += first.value
+                first.value = 0
+
+            next_position = col_start + 12
+            for node in [fourth, third, second, first]:
+                if node and node.value != 0:
+                    node.number = next_position
+                    next_position -= 4
+
+        self.remove_zero_nodes()
         
