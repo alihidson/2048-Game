@@ -82,7 +82,6 @@ class LinkedList:
         
         
     def move_up(self):
-        is_success = False
         for col_start in range(1, 5):
             first = None
             second = None
@@ -106,27 +105,21 @@ class LinkedList:
             if first and second and first.value == second.value:
                 first.value += second.value
                 second.value = 0
-                is_success = True
             if second and third and second.value == third.value:
                 second.value += third.value
                 third.value = 0
-                is_success = True
             if third and fourth and third.value == fourth.value:
                 third.value += fourth.value
                 fourth.value = 0
-                is_success = True
             if first and third and second == None and first.value == third.value:
                 first.value += third.value
                 third.value = 0
-                is_success = True
             if second and fourth and third == None and second.value == fourth.value:
                 second.value += fourth.value
                 fourth.value = 0
-                is_success = True
             if first and fourth and second == None and third == None and first.value == fourth.value:
                 first.value += fourth.value
                 fourth.value = 0
-                is_success = True
 
             next_position = col_start
             for node in [first, second, third, fourth]:
@@ -136,7 +129,6 @@ class LinkedList:
                     
 
         self.remove_zero_nodes()
-        return is_success
         
         
     

@@ -138,8 +138,8 @@ while Play:
         
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
-            if game.move_up() == True:
-                sw_random_append = True
+            game.move_up()
+            sw_random_append = True
             
         elif event.key == pygame.K_DOWN:
             game.move_down()
