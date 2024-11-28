@@ -66,8 +66,6 @@ class LinkedList:
         
         
         
-        
-        
     def remove_zero_nodes(self):
         current = self.head.next
         while current:
@@ -76,6 +74,9 @@ class LinkedList:
                 if current.next:
                     current.next.prev = current.prev
             current = current.next
+        
+        
+        
         
         
         
@@ -108,6 +109,15 @@ class LinkedList:
                 third.value = 0
             if third and fourth and third.value == fourth.value:
                 third.value += fourth.value
+                fourth.value = 0
+            if first and third and second == None and first.value == third.value:
+                first.value += third.value
+                third.value = 0
+            if second and fourth and third == None and second.value == fourth.value:
+                second.value += fourth.value
+                fourth.value = 0
+            if first and fourth and second == None and third == None and first.value == fourth.value:
+                first.value += fourth.value
                 fourth.value = 0
 
             next_position = col_start
@@ -150,6 +160,16 @@ class LinkedList:
             if second and first and second.value == first.value:
                 second.value += first.value
                 first.value = 0
+            if fourth and second and third == None and fourth.value == second.value:
+                fourth.value += second.value
+                second.value = 0
+            if third and first and second == None and third.value == first.value:
+                third.value += first.value
+                first.value = 0
+            if fourth and first and third == None and second == None and fourth.value == first.value:
+                fourth.value += first.value
+                first.value = 0
+                
 
             next_position = col_start + 12
             for node in [fourth, third, second, first]:
