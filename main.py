@@ -106,7 +106,9 @@ pygame.init()
 screen_width = 800
 screen_height = 600
 
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen_game = pygame.display.set_mode((screen_width, screen_height))
+screen_game_over = pygame.display.set_mode((screen_width, screen_height))
+
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
@@ -126,6 +128,7 @@ game = LinkedList()
 
 
 Play = True
+Game_Over = False
 sw_random_append = True
 
 while Play:
@@ -181,12 +184,13 @@ while Play:
                 sw_random_append = False
     else:
         Play = False
+        Game_Over = True
         print("Game Over")
         
         
         
     
-    screen.fill(LIGHT_BROWN)
+    screen_game.fill(LIGHT_BROWN)
     
         
     cell_size = 125
@@ -194,14 +198,35 @@ while Play:
         for col in range(4):
             x = 50 + (col * cell_size)
             y = 50 + (row * cell_size)
-            pygame.draw.rect(screen, GREEN, (x, y, cell_size, cell_size), 3)
+            pygame.draw.rect(screen_game, RED, (x, y, cell_size, cell_size), 3)
             
-    pygame.draw.rect(screen, RED, (50, 50, 500, 500), 5) # x, y, width, height
+    pygame.draw.rect(screen_game, RED, (50, 50, 500, 500), 5) # x, y, width, height
 
-    draw_nodes_with_colors(screen, game)
+    draw_nodes_with_colors(screen_game, game)
     
     pygame.display.flip()
     clock.tick(60)
+    
+    
+
+
+
+
+while Game_Over:
+    
+    screen_game_over.fill(GREEN)
+    
+    pygame.event.pump()
+    event = pygame.event.wait()
+    if event.type == pygame.QUIT:
+        Game_Over = False
+        
+        
+    pygame.display.flip()
+    clock.tick(60)
+    
+    
+
 
 pygame.quit()
 sys.exit()
