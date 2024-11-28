@@ -47,6 +47,26 @@ class LinkedList:
         
     
     
+    def to_array(self):
+        result = []
+        current = self.head.next
+        
+        while current:
+            result.append((current.number, current.value))
+            current = current.next
+        return result
+    
+    
+    
+    def has_changed(self, first_state):
+        current_state = self.to_array()
+        
+        if current_state != first_state:
+            return True
+        else:
+            return False
+    
+    
     
     
     def is_board_full(self):

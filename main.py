@@ -134,6 +134,8 @@ sw_random_append = True
 while Play:
     
     pygame.event.pump()
+    first_state = game.to_array()
+    
 
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
@@ -142,19 +144,20 @@ while Play:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
             game.move_up()
-            sw_random_append = True
             
         elif event.key == pygame.K_DOWN:
             game.move_down()
-            sw_random_append = True
             
         elif event.key == pygame.K_LEFT:
             game.move_left()
-            sw_random_append = True
             
         elif event.key == pygame.K_RIGHT:
             game.move_right()
-            sw_random_append = True
+            
+            
+    if game.has_changed(first_state) == True:
+        sw_random_append = True
+    
     
     
     # Define the numbers and their corresponding probabilities
