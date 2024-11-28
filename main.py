@@ -127,6 +127,7 @@ game = LinkedList()
 
 Play = True
 sw_random_append = True
+
 while Play:
     
     pygame.event.pump()
@@ -138,9 +139,11 @@ while Play:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
             game.move_up()
+            sw_random_append = True
             
         elif event.key == pygame.K_DOWN:
             game.move_down()
+            sw_random_append = True
             
         # elif event.key == pygame.K_LEFT:
         #     game.move_left()
@@ -157,23 +160,26 @@ while Play:
     value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
     
     
-    while sw_random_append == True:
-        
+    if game.is_board_full() == False:
         attempts = 0
         maxAttempts = 50
         
-        # Generate a random integer between 1 and 16 (inclusive)
-        node_number_created_with_chance = random.randint(1, 16)
+        while sw_random_append == True:
         
-        if game.check_node_empty(node_number_created_with_chance) == True:
-            game.add_node(node_number_created_with_chance, value_created_with_chance)
-            sw_random_append = False
+            # Generate a random integer between 1 and 16 (inclusive)
+            node_number_created_with_chance = random.randint(1, 16)
         
-        attempts += 1
-        # avoid to infinity loop
-        if attempts > maxAttempts:
-            sw_random_append = False
+            if game.check_node_empty(node_number_created_with_chance) == True:
+                game.add_node(node_number_created_with_chance, value_created_with_chance)
+                sw_random_append = False
         
+            attempts += 1
+            # avoid to infinity loop
+            if attempts > maxAttempts:
+                sw_random_append = False
+    else:
+        Play = False
+        print("Game Over")
         
         
         

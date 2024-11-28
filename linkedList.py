@@ -23,7 +23,8 @@ class LinkedList:
             new_Node.next = current.next
             new_Node.prev = current
             current.next = new_Node
-            new_Node.next.prev = new_Node
+            if new_Node.next != None:
+                new_Node.next.prev = new_Node
             
     
     
@@ -31,17 +32,39 @@ class LinkedList:
     
     def check_node_empty(self, input_number):
         
-        sw = 1
         current = self.head.next
+        
+        if current == None:
+            return True
         
         while current != None:
             if current.number == input_number:
-                sw = 0
+                return False
+            current = current.next
         
-        if sw == 0:
-            return False
-        else:
+        return True
+        
+        
+    
+    
+    
+    
+    def is_board_full(self):
+        current = self.head.next
+        filled_nodes = 0
+
+        while current:
+            filled_nodes += 1
+            current = current.next
+            
+        if filled_nodes == 16:
             return True
+        else:
+            return False
+        
+        
+        
+        
         
         
         
@@ -59,7 +82,11 @@ class LinkedList:
         
     def move_up(self):
         for col_start in range(1, 5):
-            first, second, third, fourth = None, None, None, None
+            first = None
+            second = None
+            third = None
+            fourth = None
+            
             current = self.head.next
 
             while current:
