@@ -145,9 +145,10 @@ while Play:
             game.move_down()
             sw_random_append = True
             
-        # elif event.key == pygame.K_LEFT:
-        #     game.move_left()
-        #
+        elif event.key == pygame.K_LEFT:
+            game.move_left()
+            sw_random_append = True
+            
         # elif event.key == pygame.K_RIGHT:
         #     game.move_right()
     

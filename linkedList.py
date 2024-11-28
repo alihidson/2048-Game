@@ -101,6 +101,7 @@ class LinkedList:
                     fourth = current
                 current = current.next
 
+
             if first and second and first.value == second.value:
                 first.value += second.value
                 second.value = 0
@@ -151,6 +152,7 @@ class LinkedList:
                     fourth = current
                 current = current.next
 
+
             if fourth and third and fourth.value == third.value:
                 fourth.value += third.value
                 third.value = 0
@@ -179,3 +181,59 @@ class LinkedList:
 
         self.remove_zero_nodes()
         
+        
+        
+        
+        
+        
+    def move_left(self):
+        for row_start in range(1, 14, 4):
+            first = None
+            second = None
+            third = None
+            fourth = None
+            
+            current = self.head.next
+            
+            while current:
+                if current.number == row_start:
+                    first = current
+                elif current.number == row_start + 1:
+                    second = current
+                elif current.number == row_start + 2:
+                    third = current
+                elif current.number == row_start + 3:
+                    fourth = current
+                current = current.next
+                
+                
+            if first and second and first.value == second.value:
+                first.value += second.value
+                second.value = 0
+            if second and third and second.value == third.value:
+                second.value += third.value
+                third.value = 0
+            if third and fourth and third.value == fourth.value:
+                third.value += fourth.value
+                fourth.value = 0
+            if first and third and second == None and first.value == third.value:
+                first.value += third.value
+                third.value = 0
+            if second and fourth and third == None and second.value == fourth.value:
+                second.value += fourth.value
+                fourth.value = 0
+            if first and fourth and second == None and third == None and first.value == fourth.value:
+                first.value += fourth.value
+                fourth.value = 0
+                
+                
+            next_position = row_start
+            for node in [first, second, third, fourth]:
+                if node and node.value != 0:
+                    node.number = next_position
+                    next_position += 1
+                    
+        self.remove_zero_nodes()
+                    
+                
+                    
