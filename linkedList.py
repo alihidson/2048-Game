@@ -82,6 +82,7 @@ class LinkedList:
         
         
     def move_up(self):
+        is_success = False
         for col_start in range(1, 5):
             first = None
             second = None
@@ -105,29 +106,37 @@ class LinkedList:
             if first and second and first.value == second.value:
                 first.value += second.value
                 second.value = 0
+                is_success = True
             if second and third and second.value == third.value:
                 second.value += third.value
                 third.value = 0
+                is_success = True
             if third and fourth and third.value == fourth.value:
                 third.value += fourth.value
                 fourth.value = 0
+                is_success = True
             if first and third and second == None and first.value == third.value:
                 first.value += third.value
                 third.value = 0
+                is_success = True
             if second and fourth and third == None and second.value == fourth.value:
                 second.value += fourth.value
                 fourth.value = 0
+                is_success = True
             if first and fourth and second == None and third == None and first.value == fourth.value:
                 first.value += fourth.value
                 fourth.value = 0
+                is_success = True
 
             next_position = col_start
             for node in [first, second, third, fourth]:
                 if node and node.value != 0:
                     node.number = next_position
                     next_position += 4
+                    
 
         self.remove_zero_nodes()
+        return is_success
         
         
     
@@ -235,5 +244,58 @@ class LinkedList:
                     
         self.remove_zero_nodes()
                     
+                    
+    
+    def move_right(self):
+        for row_start in range(1, 14, 4):
+            first = None
+            second = None
+            third = None
+            fourth = None
+            
+            current = self.head.next
+            
+            while current:
+                if current.number == row_start:
+                    first = current
+                elif current.number == row_start + 1:
+                    second = current
+                elif current.number == row_start + 2:
+                    third = current
+                elif current.number == row_start + 3:
+                    fourth = current
+                current = current.next
+                
+                
+            if fourth and third and fourth.value == third.value:
+                fourth.value += third.value
+                third.value = 0
+            if third and second and third.value == second.value:
+                third.value += second.value
+                second.value = 0
+            if second and first and second.value == first.value:
+                second.value += first.value
+                first.value = 0
+            if fourth and second and third == None and fourth.value == second.value:
+                fourth.value += second.value
+                second.value = 0
+            if third and first and second == None and third.value == first.value:
+                third.value += first.value
+                first.value = 0
+            if fourth and first and third == None and second == None and fourth.value == first.value:
+                fourth.value += first.value
+                first.value = 0
+                
+                
+            next_position = row_start + 3
+            for node in [fourth, third, second, first]:
+                if node and node.value != 0:
+                    node.number = next_position
+                    next_position -= 1
+
+        self.remove_zero_nodes()
+            
+            
+        
                 
                     

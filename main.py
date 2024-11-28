@@ -138,8 +138,8 @@ while Play:
         
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
-            game.move_up()
-            sw_random_append = True
+            if game.move_up() == True:
+                sw_random_append = True
             
         elif event.key == pygame.K_DOWN:
             game.move_down()
@@ -149,8 +149,9 @@ while Play:
             game.move_left()
             sw_random_append = True
             
-        # elif event.key == pygame.K_RIGHT:
-        #     game.move_right()
+        elif event.key == pygame.K_RIGHT:
+            game.move_right()
+            sw_random_append = True
     
     
     # Define the numbers and their corresponding probabilities
