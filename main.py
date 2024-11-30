@@ -107,7 +107,7 @@ screen_width = 800
 screen_height = 600
 
 screen_game = pygame.display.set_mode((screen_width, screen_height))
-screen_game_over = pygame.display.set_mode((screen_width, screen_height))
+screen_Finish = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
@@ -128,8 +128,13 @@ game = LinkedList()
 
 
 Play = True
-Game_Over = False
 sw_random_append = True
+Finish = False
+
+Game_Over1 = False
+Game_Over2 = False
+Game_Over3 = False
+Game_Over4 = False
 
 while Play:
     
@@ -144,19 +149,33 @@ while Play:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
             game.move_up()
+            if game.has_changed(first_state) == True:
+                sw_random_append = True
+            else:
+                Game_Over1 = True
+                
             
         elif event.key == pygame.K_DOWN:
             game.move_down()
+            if game.has_changed(first_state) == True:
+                sw_random_append = True
+            else:
+                Game_Over2 = True
             
         elif event.key == pygame.K_LEFT:
             game.move_left()
+            if game.has_changed(first_state) == True:
+                sw_random_append = True
+            else:
+                Game_Over3 = True
             
         elif event.key == pygame.K_RIGHT:
             game.move_right()
+            if game.has_changed(first_state) == True:
+                sw_random_append = True
+            else:
+                Game_Over4 = True
             
-            
-    if game.has_changed(first_state) == True:
-        sw_random_append = True
     
     
     
@@ -168,26 +187,27 @@ while Play:
     value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
     
     
-    if game.is_board_full() == False:
-        attempts = 0
-        maxAttempts = 50
+    
+    attempts = 0
+    maxAttempts = 50
         
-        while sw_random_append == True:
+    while sw_random_append == True:
         
-            # Generate a random integer between 1 and 16 (inclusive)
-            node_number_created_with_chance = random.randint(1, 16)
+        # Generate a random integer between 1 and 16 (inclusive)
+        node_number_created_with_chance = random.randint(1, 16)
         
-            if game.check_node_empty(node_number_created_with_chance) == True:
-                game.add_node(node_number_created_with_chance, value_created_with_chance)
-                sw_random_append = False
+        if game.check_node_empty(node_number_created_with_chance) == True:
+            game.add_node(node_number_created_with_chance, value_created_with_chance)
+            sw_random_append = False
         
-            attempts += 1
-            # avoid to infinity loop
-            if attempts > maxAttempts:
-                sw_random_append = False
-    else:
+        attempts += 1
+        # avoid to infinity loop
+        if attempts > maxAttempts:
+            sw_random_append = False
+            
+    if Game_Over1 and Game_Over2 and Game_Over3 and Game_Over4: 
         Play = False
-        Game_Over = True
+        Finish = True
         print("Game Over")
         
         
@@ -215,14 +235,14 @@ while Play:
 
 
 
-while Game_Over:
+while Finish:
     
-    screen_game_over.fill(GREEN)
+    screen_Finish.fill(GREEN)
     
     pygame.event.pump()
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
-        Game_Over = False
+        Finish = False
         
         
     pygame.display.flip()

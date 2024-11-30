@@ -45,6 +45,8 @@ class LinkedList:
         return True
         
         
+        
+        
     
     
     def to_array(self):
@@ -58,6 +60,9 @@ class LinkedList:
     
     
     
+    
+    
+    
     def has_changed(self, first_state):
         current_state = self.to_array()
         
@@ -65,22 +70,7 @@ class LinkedList:
             return True
         else:
             return False
-    
-    
-    
-    
-    def is_board_full(self):
-        current = self.head.next
-        filled_nodes = 0
-
-        while current:
-            filled_nodes += 1
-            current = current.next
-            
-        if filled_nodes == 16:
-            return True
-        else:
-            return False
+        
         
         
         
