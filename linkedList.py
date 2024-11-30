@@ -6,6 +6,8 @@ class LinkedList:
         self.head = Node(0, -1) # the number is 0 and the value is -1
         
         
+    def clear(self):
+        self.head.next = None
         
 
     def add_node(self, number, value):
