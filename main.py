@@ -4,6 +4,7 @@ import sys
 import random
 
 from linkedList import LinkedList
+from deque import Deque
 
 
 
@@ -122,9 +123,7 @@ LIGHT_BROWN = (255, 222, 162)
 
 
 game = LinkedList()
-# game.add_node(5, 2)
-# game.add_node(9, 4)
-# game.add_node(14, 8)
+save_for_undo = Deque()
 
 
 Play = True
@@ -139,6 +138,7 @@ Game_Over4 = False
 while Play:
     
     pygame.event.pump()
+    
     first_state = game.to_array()
     
 
@@ -148,14 +148,15 @@ while Play:
         
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP:
+            save_for_undo.save_state(game)
             game.move_up()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
             else:
                 Game_Over1 = True
                 
-            
         elif event.key == pygame.K_DOWN:
+            save_for_undo.save_state(game)
             game.move_down()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
@@ -163,6 +164,7 @@ while Play:
                 Game_Over2 = True
             
         elif event.key == pygame.K_LEFT:
+            save_for_undo.save_state(game)
             game.move_left()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
@@ -170,11 +172,20 @@ while Play:
                 Game_Over3 = True
             
         elif event.key == pygame.K_RIGHT:
+            save_for_undo.save_state(game)
             game.move_right()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
             else:
                 Game_Over4 = True
+                
+        elif event.key == pygame.K_z:
+            save_for_undo.undo(game)
+                
+    
+    
+    # if sw_random_append == True:
+    #     save_for_undo.save_state(game)
             
     
     

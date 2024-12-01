@@ -1,4 +1,4 @@
-class deque:
+class Deque:
     
     def __init__(self):
         self.save = []
@@ -24,11 +24,8 @@ class deque:
         if self.save:
             
             last_state = self.save.pop()
-            linkedList.clear() 
+            linkedList.clear()
             
             for number, value in last_state:
                 linkedList.add_node(number, value)
                 
-            return True
-        else:
-            return False
