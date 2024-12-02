@@ -124,6 +124,7 @@ LIGHT_BROWN = (255, 222, 162)
 
 game = LinkedList()
 save_for_undo = Deque()
+save_for_redo = Deque()
 
 
 Play = True
@@ -180,7 +181,11 @@ while Play:
                 Game_Over4 = True
                 
         elif event.key == pygame.K_z:
-            save_for_undo.undo(game)
+            save_for_redo.save_state(game)
+            save_for_undo.put_back(game)
+            
+        elif event.key == pygame.K_x:
+            save_for_redo.put_back(game)
                 
     
     

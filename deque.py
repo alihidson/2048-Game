@@ -18,7 +18,7 @@ class Deque:
             
             
             
-    def undo(self, linkedList):
+    def put_back(self, linkedList):
         
         
         if self.save:
