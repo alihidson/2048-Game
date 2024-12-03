@@ -9,8 +9,8 @@ from deque import Deque
 
 
 def get_cell_position(number):
-    cell_size = 125
-    offset_x = 55
+    cell_size = 85
+    offset_x = 53
     offset_y = 53
     row = (number - 1) // 4
     col = (number - 1) % 4
@@ -64,8 +64,8 @@ def get_tile_color(value):
 def draw_nodes_with_colors(screen, linkedList):
     
     current = linkedList.head.next
-    cell_size = 115
-    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 80)
+    cell_size = 77
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 60)
 
     while current != None:
         x, y = get_cell_position(current.number)
@@ -85,8 +85,8 @@ def draw_nodes_with_colors(screen, linkedList):
 
 
 pygame.init()
-screen_width = 800
-screen_height = 600
+screen_width = 600
+screen_height = 450
 
 screen_game = pygame.display.set_mode((screen_width, screen_height))
 screen_Finish = pygame.display.set_mode((screen_width, screen_height))
@@ -101,6 +101,16 @@ GRAY = (200, 200, 200)
 RED = (195, 0, 0)
 GREEN = (50, 149, 0)
 LIGHT_BROWN = (255, 222, 162)
+PURPLE = (150, 0, 195)
+BACK_GROUND = (60, 164, 255)
+
+undo_button_color = (70, 130, 180)
+undo_button_hover_color = (100, 149, 237)
+undo_button_shadow_color = (40, 80, 150)
+undo_text_color = (255, 255, 255)
+undo_button_x, undo_button_y = 450, 100
+undo_button_width, undo_button_height = 100, 60
+font = pygame.font.Font(None, 36)
 
 
 game = LinkedList()
@@ -181,16 +191,28 @@ while Play:
             else:
                 Game_Over4 = True
                 
-        elif event.key == pygame.K_z:
-            if number_can_undo > 0:
-                save_for_redo.save_state(game)
-                save_for_undo.put_back(game)
-                number_can_undo -= 1
+        # elif event.key == pygame.K_z:
+        #     if number_can_undo > 0:
+        #         save_for_redo.save_state(game)
+        #         save_for_undo.put_back(game)
+        #         number_can_undo -= 1
             
         elif event.key == pygame.K_x:
             if number_can_redo > 0:
                 save_for_redo.put_back(game)
                 number_can_redo -= 1
+                
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        if (undo_button_x <= mouse_x <= undo_button_x + undo_button_width and
+            undo_button_y <= mouse_y <= undo_button_y + undo_button_height):
+            if number_can_undo > 0:
+                save_for_redo.save_state(game)
+                save_for_undo.put_back(game)
+                number_can_undo -= 1
+            else:
+                print("you arrive to limit of undo")
+                
                 
     
     if game.has_won() == True:
@@ -233,19 +255,46 @@ while Play:
         
         
     
-    screen_game.fill(LIGHT_BROWN)
+    screen_game.fill(BACK_GROUND)
     
         
-    cell_size = 125
+    cell_size = 85
     for row in range(4):
         for col in range(4):
             x = 50 + (col * cell_size)
             y = 50 + (row * cell_size)
-            pygame.draw.rect(screen_game, RED, (x, y, cell_size, cell_size), 3)
+            pygame.draw.rect(screen_game, PURPLE, (x, y, cell_size, cell_size), 5)
             
-    pygame.draw.rect(screen_game, RED, (50, 50, 500, 500), 5) # x, y, width, height
+            
+            
+    pygame.draw.rect(screen_game, PURPLE, (40, 40, 360, 360), 10) # x, y, width, height
+
+
 
     draw_nodes_with_colors(screen_game, game)
+    
+    
+    
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    is_hovered = (undo_button_x <= mouse_x <= undo_button_x + undo_button_width and
+                  undo_button_y <= mouse_y <= undo_button_y + undo_button_height)
+
+
+    current_button_color = undo_button_hover_color if is_hovered else undo_button_color
+
+    pygame.draw.rect(screen_game, current_button_color,
+                     (undo_button_x, undo_button_y, undo_button_width, undo_button_height), border_radius=10)
+
+    border_color = (255, 255, 255)
+    border_thickness = 2
+    pygame.draw.rect(screen_game, border_color,
+                     (undo_button_x, undo_button_y, undo_button_width, undo_button_height), border_radius=10, width=border_thickness)
+
+    undo_text = font.render("Undo", True, undo_text_color)
+    undo_text_rect = undo_text.get_rect(center=(undo_button_x + undo_button_width // 2, undo_button_y + undo_button_height // 2))
+    screen_game.blit(undo_text, undo_text_rect)
+
+
     
     pygame.display.flip()
     clock.tick(60)
