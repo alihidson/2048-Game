@@ -84,7 +84,7 @@ def draw_nodes_with_colors(screen, linkedList):
     
     current = linkedList.head.next
     cell_size = 115
-    font = pygame.font.Font(None, 40)
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 80)
 
     while current != None:
         x, y = get_cell_position(current.number)
@@ -157,6 +157,10 @@ while Play:
             game.move_up()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
+                Game_Over1 = False
+                Game_Over2 = False
+                Game_Over3 = False
+                Game_Over4 = False
             else:
                 Game_Over1 = True
                 
@@ -165,6 +169,10 @@ while Play:
             game.move_down()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
+                Game_Over1 = False
+                Game_Over2 = False
+                Game_Over3 = False
+                Game_Over4 = False
             else:
                 Game_Over2 = True
             
@@ -173,6 +181,10 @@ while Play:
             game.move_left()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
+                Game_Over1 = False
+                Game_Over2 = False
+                Game_Over3 = False
+                Game_Over4 = False
             else:
                 Game_Over3 = True
             
@@ -181,6 +193,10 @@ while Play:
             game.move_right()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
+                Game_Over1 = False
+                Game_Over2 = False
+                Game_Over3 = False
+                Game_Over4 = False
             else:
                 Game_Over4 = True
                 
