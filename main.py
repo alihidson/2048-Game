@@ -60,25 +60,6 @@ def get_tile_color(value):
 
 
 
-# def draw_numbers_with_colors(screen, linked_list):
-#     current = linked_list.head
-#     font = pygame.font.Font(None, 40)  # Font for numbers
-
-#     while current != None:
-#         x, y = get_cell_position(current.number)
-        
-#         # Render the number with its specific color
-#         text_color = get_tile_color(current.value)  # Color based on value
-#         text = font.render(str(current.value), True, text_color)
-#         text_rect = text.get_rect(center=(x + 62, y + 62))  # Centered in the cell
-        
-#         # Draw only the number, no background fill
-#         screen.blit(text, text_rect)
-
-#         current = current.down
-
-
-
 
 def draw_nodes_with_colors(screen, linkedList):
     
@@ -212,9 +193,8 @@ while Play:
                 number_can_redo -= 1
                 
     
-    
-    # if sw_random_append == True:
-    #     save_for_undo.save_state(game)
+    if game.has_won() == True:
+        print("you have won")
             
     
     

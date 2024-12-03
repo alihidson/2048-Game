@@ -10,6 +10,16 @@ class LinkedList:
     def clear(self):
         self.head.next = None
         
+        
+    def has_won(self):
+        current = self.head.next
+        if current != None:
+            while current != None:
+                if current.value == 2048:
+                    return True
+                current = current.next
+        
+        
 
     def add_node(self, number, value):
         new_Node = Node(number, value)
