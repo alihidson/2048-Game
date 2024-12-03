@@ -4,6 +4,7 @@ class LinkedList:
     def __init__(self):
         
         self.head = Node(0, -1) # the number is 0 and the value is -1
+        self.score = 0
         
         
     def clear(self):
@@ -117,21 +118,27 @@ class LinkedList:
             if first and second and first.value == second.value:
                 first.value += second.value
                 second.value = 0
+                self.score += first.value
             if second and third and second.value == third.value:
                 second.value += third.value
                 third.value = 0
+                self.score += second.value
             if third and fourth and third.value == fourth.value:
                 third.value += fourth.value
                 fourth.value = 0
+                self.score += third.value
             if first and third and second == None and first.value == third.value:
                 first.value += third.value
                 third.value = 0
+                self.score += first.value
             if second and fourth and third == None and second.value == fourth.value:
                 second.value += fourth.value
                 fourth.value = 0
+                self.score += second.value
             if first and fourth and second == None and third == None and first.value == fourth.value:
                 first.value += fourth.value
                 fourth.value = 0
+                self.score += first.value
 
             next_position = col_start
             for node in [first, second, third, fourth]:
@@ -169,21 +176,27 @@ class LinkedList:
             if fourth and third and fourth.value == third.value:
                 fourth.value += third.value
                 third.value = 0
+                self.score += fourth.value
             if third and second and third.value == second.value:
                 third.value += second.value
                 second.value = 0
+                self.score += third.value
             if second and first and second.value == first.value:
                 second.value += first.value
                 first.value = 0
+                self.score += second.value
             if fourth and second and third == None and fourth.value == second.value:
                 fourth.value += second.value
                 second.value = 0
+                self.score += fourth.value
             if third and first and second == None and third.value == first.value:
                 third.value += first.value
                 first.value = 0
+                self.score += third.value
             if fourth and first and third == None and second == None and fourth.value == first.value:
                 fourth.value += first.value
                 first.value = 0
+                self.score += fourth.value
                 
 
             next_position = col_start + 12
@@ -223,21 +236,27 @@ class LinkedList:
             if first and second and first.value == second.value:
                 first.value += second.value
                 second.value = 0
+                self.score += first.value
             if second and third and second.value == third.value:
                 second.value += third.value
                 third.value = 0
+                self.score += second.value
             if third and fourth and third.value == fourth.value:
                 third.value += fourth.value
                 fourth.value = 0
+                self.score += third.value
             if first and third and second == None and first.value == third.value:
                 first.value += third.value
                 third.value = 0
+                self.score += first.value
             if second and fourth and third == None and second.value == fourth.value:
                 second.value += fourth.value
                 fourth.value = 0
+                self.score += second.value
             if first and fourth and second == None and third == None and first.value == fourth.value:
                 first.value += fourth.value
                 fourth.value = 0
+                self.score += first.value
                 
                 
             next_position = row_start
@@ -274,21 +293,27 @@ class LinkedList:
             if fourth and third and fourth.value == third.value:
                 fourth.value += third.value
                 third.value = 0
+                self.score += fourth.value
             if third and second and third.value == second.value:
                 third.value += second.value
                 second.value = 0
+                self.score += third.value
             if second and first and second.value == first.value:
                 second.value += first.value
                 first.value = 0
+                self.score += second.value
             if fourth and second and third == None and fourth.value == second.value:
                 fourth.value += second.value
                 second.value = 0
+                self.score += fourth.value
             if third and first and second == None and third.value == first.value:
                 third.value += first.value
                 first.value = 0
+                self.score += third.value
             if fourth and first and third == None and second == None and fourth.value == first.value:
                 fourth.value += first.value
                 first.value = 0
+                self.score += fourth.value
                 
                 
             next_position = row_start + 3
@@ -297,9 +322,4 @@ class LinkedList:
                     node.number = next_position
                     next_position -= 1
 
-        self.remove_zero_nodes()
-            
-            
-        
-                
-                    
+        self.remove_zero_nodes()               
