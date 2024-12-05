@@ -88,6 +88,7 @@ pygame.init()
 screen_width = 600
 screen_height = 450
 
+screen_welcome = pygame.display.set_mode((screen_width, screen_height))
 screen_game = pygame.display.set_mode((screen_width, screen_height))
 screen_Finish = pygame.display.set_mode((screen_width, screen_height))
 
@@ -103,6 +104,23 @@ GREEN = (50, 149, 0)
 LIGHT_BROWN = (255, 222, 162)
 PURPLE = (150, 0, 195)
 BACK_GROUND = (60, 164, 255)
+
+play_button_color = (70, 130, 180)
+play_button_hover_color = (100, 149, 237)
+play_button_shadow_color = (40, 80, 150)
+play_text_color = (255, 255, 255)
+play_button_x, play_button_y = 250, 100
+play_button_width, play_button_height = 100, 60
+
+ai_button_color = (70, 130, 180)
+ai_button_hover_color = (100, 149, 237)
+ai_button_shadow_color = (40, 80, 150)
+ai_text_color = (255, 255, 255)
+ai_button_x, ai_button_y = 250, 300
+ai_button_width, ai_button_height = 100, 60
+
+
+
 
 undo_button_color = (70, 130, 180)
 undo_button_hover_color = (100, 149, 237)
@@ -129,8 +147,8 @@ save_for_redo = Deque()
 number_can_undo = 5
 number_can_redo = 5
 
-
-Play = True
+Welcome = True
+Play = False
 sw_random_append = True
 Finish = False
 
@@ -138,6 +156,81 @@ Game_Over1 = False
 Game_Over2 = False
 Game_Over3 = False
 Game_Over4 = False
+
+while Welcome:
+    
+    screen_welcome.fill(BACK_GROUND)
+    
+    pygame.event.pump()
+    event = pygame.event.wait()
+    if event.type == pygame.QUIT:
+        Welcome = False
+        
+    
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        if (play_button_x <= mouse_x <= play_button_x + play_button_width and
+            play_button_y <= mouse_y <= play_button_y + play_button_height):
+            
+            Welcome = False
+            Play = True
+                
+        elif (ai_button_x <= mouse_x <= ai_button_x + ai_button_width and
+            ai_button_y <= mouse_y <= ai_button_y + ai_button_height):
+            
+            Welcome = False
+        
+    
+    
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    
+    # button for Play user
+    
+    is_hovered = (play_button_x <= mouse_x <= play_button_x + play_button_width and
+                  play_button_y <= mouse_y <= play_button_y + play_button_height)
+
+    current_button_color = play_button_hover_color if is_hovered else play_button_color
+
+    pygame.draw.rect(screen_welcome, current_button_color,
+                     (play_button_x, play_button_y, play_button_width, play_button_height), border_radius=10)
+
+    border_color = (255, 255, 255)
+    border_thickness = 2
+    pygame.draw.rect(screen_welcome, border_color,
+                     (play_button_x, play_button_y, play_button_width, play_button_height), border_radius=10, width=border_thickness)
+
+    play_text = font.render("Play", True, undo_text_color)
+    play_text_rect = play_text.get_rect(center=(play_button_x + play_button_width // 2, play_button_y + play_button_height // 2))
+    screen_welcome.blit(play_text, play_text_rect)
+    
+    
+   
+   # button for AI
+    
+    is_hovered = (ai_button_x <= mouse_x <= ai_button_x + ai_button_width and
+                  ai_button_y <= mouse_y <= ai_button_y + ai_button_height)
+
+    current_button_color = ai_button_hover_color if is_hovered else ai_button_color
+
+    pygame.draw.rect(screen_welcome, current_button_color,
+                     (ai_button_x, ai_button_y, ai_button_width, ai_button_height), border_radius=10)
+
+    border_color = (255, 255, 255)
+    border_thickness = 2
+    pygame.draw.rect(screen_welcome, border_color,
+                     (ai_button_x, ai_button_y, ai_button_width, ai_button_height), border_radius=10, width=border_thickness)
+
+    ai_text = font.render("AI", True, ai_text_color)
+    ai_text_rect = ai_text.get_rect(center=(ai_button_x + ai_button_width // 2, ai_button_y + ai_button_height // 2))
+    screen_welcome.blit(ai_text, ai_text_rect)
+    
+        
+        
+    pygame.display.flip()
+    clock.tick(60)
+    
+    
+    
 
 while Play:
     
@@ -205,10 +298,12 @@ while Play:
         #         save_for_undo.put_back(game)
         #         number_can_undo -= 1
             
-        elif event.key == pygame.K_x:
-            if number_can_redo > 0:
-                save_for_redo.put_back(game)
-                number_can_redo -= 1
+        # elif event.key == pygame.K_x:
+        #     if number_can_redo > 0:
+        #         save_for_redo.put_back(game)
+        #         number_can_redo -= 1
+        
+        
                 
     if event.type == pygame.MOUSEBUTTONDOWN:
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -293,6 +388,7 @@ while Play:
     
     mouse_x, mouse_y = pygame.mouse.get_pos()
     
+    # button for undo
     
     is_hovered = (undo_button_x <= mouse_x <= undo_button_x + undo_button_width and
                   undo_button_y <= mouse_y <= undo_button_y + undo_button_height)
@@ -312,7 +408,7 @@ while Play:
     screen_game.blit(undo_text, undo_text_rect)
     
     
-    mouse_x, mouse_y = pygame.mouse.get_pos()
+    # button for redo
     
     is_hovered = (redo_button_x <= mouse_x <= redo_button_x + redo_button_width and
                   redo_button_y <= mouse_y <= redo_button_y + redo_button_height)
