@@ -110,6 +110,14 @@ undo_button_shadow_color = (40, 80, 150)
 undo_text_color = (255, 255, 255)
 undo_button_x, undo_button_y = 450, 100
 undo_button_width, undo_button_height = 100, 60
+
+redo_button_color = (70, 130, 180)
+redo_button_hover_color = (100, 149, 237)
+redo_button_shadow_color = (40, 80, 150)
+redo_text_color = (255, 255, 255)
+redo_button_x, redo_button_y = 450, 300
+redo_button_width, redo_button_height = 100, 60
+
 font = pygame.font.Font(None, 36)
 
 
@@ -213,6 +221,14 @@ while Play:
             else:
                 print("you arrive to limit of undo")
                 
+        elif (redo_button_x <= mouse_x <= redo_button_x + redo_button_width and
+            redo_button_y <= mouse_y <= redo_button_y + redo_button_height):
+            if number_can_redo > 0:
+                save_for_redo.put_back(game)
+                number_can_redo -= 1
+            else:
+                print("you arrive to limit of redo")
+                
                 
     
     if game.has_won() == True:
@@ -276,9 +292,10 @@ while Play:
     
     
     mouse_x, mouse_y = pygame.mouse.get_pos()
+    
+    
     is_hovered = (undo_button_x <= mouse_x <= undo_button_x + undo_button_width and
                   undo_button_y <= mouse_y <= undo_button_y + undo_button_height)
-
 
     current_button_color = undo_button_hover_color if is_hovered else undo_button_color
 
@@ -293,6 +310,26 @@ while Play:
     undo_text = font.render("Undo", True, undo_text_color)
     undo_text_rect = undo_text.get_rect(center=(undo_button_x + undo_button_width // 2, undo_button_y + undo_button_height // 2))
     screen_game.blit(undo_text, undo_text_rect)
+    
+    
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    
+    is_hovered = (redo_button_x <= mouse_x <= redo_button_x + redo_button_width and
+                  redo_button_y <= mouse_y <= redo_button_y + redo_button_height)
+
+    current_button_color = redo_button_hover_color if is_hovered else redo_button_color
+
+    pygame.draw.rect(screen_game, current_button_color,
+                     (redo_button_x, redo_button_y, redo_button_width, redo_button_height), border_radius=10)
+
+    border_color = (255, 255, 255)
+    border_thickness = 2
+    pygame.draw.rect(screen_game, border_color,
+                     (redo_button_x, redo_button_y, redo_button_width, redo_button_height), border_radius=10, width=border_thickness)
+
+    redo_text = font.render("Redo", True, redo_text_color)
+    redo_text_rect = redo_text.get_rect(center=(redo_button_x + redo_button_width // 2, redo_button_y + redo_button_height // 2))
+    screen_game.blit(redo_text, redo_text_rect)
 
 
     
