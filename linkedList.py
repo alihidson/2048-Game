@@ -7,17 +7,54 @@ class LinkedList:
         self.score = 0
         
         
+    def get_score(self):
+        return self.score
+
+        
     def clear(self):
         self.head.next = None
         
         
+    def find_node(self, number):
+        current = self.head.next
+        while current != None:
+            if current.number == number:
+                return current
+            current = current.next
+        return None
+
+
     def has_won(self):
         current = self.head.next
-        if current != None:
-            while current != None:
+        count = 0
+
+        if current:
+            while current:
                 if current.value == 2048:
                     return True
+                else:
+                    count += 1
                 current = current.next
+
+        # if count == 16:
+        #     sw = 0
+        #     arr = [[0] * 4] * 4
+        #     current = self.head.next
+            
+        #     while current:
+        #         for i in range(4):
+        #             for j in range(4):
+        #                 arr[i][j] = current.value
+        #                 current = current.next
+            
+        #     for i in range(3):
+        #         for j in range(3):
+        #             if arr[i][j] == arr[i+1][j] or arr[i][j] == arr[i][j+1]:
+        #                 sw = 1
+            
+        #     if sw == 0:
+        #         return False
+            
         
         
 

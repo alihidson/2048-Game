@@ -5,6 +5,7 @@ import random
 
 from linkedList import LinkedList
 from deque import Deque
+from ai import AI
 
 
 
@@ -22,31 +23,31 @@ def get_cell_position(number):
 
 def get_tile_color(value):
     if value == 2:
-        return (255, 88, 88)
+        return (255, 0, 0)
     
     elif value == 4:
-        return (237, 224, 200)
+        return (0, 255, 0)
     
     elif value == 8:
-        return (242, 177, 121)
+        return (255, 120, 0)
     
     elif value == 16:
-        return (245, 149, 99)
+        return (0, 255, 255)
     
     elif value == 32:
-        return (246, 124, 95)
+        return (255, 0, 255)
     
     elif value == 64:
-        return (246, 94, 59)
+        return (255, 255, 0)
     
     elif value == 128:
-        return (237, 207, 114)
+        return (255, 50, 145)
     
     elif value == 256:
-        return (237, 204, 97)
+        return (151, 181, 0)
     
     elif value == 512:
-        return (237, 200, 80)
+        return (94, 115, 255)
     
     elif value == 1024:
         return (237, 197, 63)
@@ -65,7 +66,7 @@ def draw_nodes_with_colors(screen, linkedList):
     
     current = linkedList.head.next
     cell_size = 77
-    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 60)
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 45)
 
     while current != None:
         x, y = get_cell_position(current.number)
@@ -149,8 +150,11 @@ number_can_redo = 5
 
 Welcome = True
 Play = False
+AI_Mode = False
 sw_random_append = True
 Finish = False
+
+ai_player = AI(game, simulations_per_move=1000)
 
 Game_Over1 = False
 Game_Over2 = False
@@ -179,6 +183,7 @@ while Welcome:
             ai_button_y <= mouse_y <= ai_button_y + ai_button_height):
             
             Welcome = False
+            AI_Mode = True
         
     
     
@@ -228,6 +233,58 @@ while Welcome:
         
     pygame.display.flip()
     clock.tick(60)
+    
+    
+
+
+while AI_Mode:
+    
+    pygame.event.pump()
+
+    best_move = ai_player.find_best_move()
+
+    first_state = game.to_array()
+
+    if best_move == 'UP':
+        game.move_up()
+    elif best_move == 'DOWN':
+        game.move_down()
+    elif best_move == 'LEFT':
+        game.move_left()
+    elif best_move == 'RIGHT':
+        game.move_right()
+
+    if game.has_changed(first_state):
+        sw_random_append = True
+
+    if sw_random_append:
+        value_created_with_chance = random.choices([2, 4], weights=[70, 30], k=1)[0]
+        attempts = 0
+        max_attempts = 50
+        while sw_random_append:
+            node_number_created_with_chance = random.randint(1, 16)
+            if game.check_node_empty(node_number_created_with_chance):
+                game.add_node(node_number_created_with_chance, value_created_with_chance)
+                sw_random_append = False
+            attempts += 1
+            if attempts > max_attempts:
+                sw_random_append = False
+
+
+    screen_game.fill(BACK_GROUND)
+    cell_size = 85
+    for row in range(4):
+        for col in range(4):
+            x = 50 + (col * cell_size)
+            y = 50 + (row * cell_size)
+            pygame.draw.rect(screen_game, PURPLE, (x, y, cell_size, cell_size), 5)
+
+    draw_nodes_with_colors(screen_game, game)
+
+    pygame.display.flip()
+    clock.tick(10)
+
+    
     
     
     
@@ -328,6 +385,8 @@ while Play:
     
     if game.has_won() == True:
         print("you have won")
+    elif game.has_won() == False:
+        print("your game is over")
             
     
     
