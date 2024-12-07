@@ -153,6 +153,7 @@ Play = False
 AI_Mode = False
 sw_random_append = True
 Finish = False
+for_first_time = True
 
 ai_player = AI(game, simulations_per_move=1000)
 
@@ -280,6 +281,12 @@ while AI_Mode:
             pygame.draw.rect(screen_game, PURPLE, (x, y, cell_size, cell_size), 5)
 
     draw_nodes_with_colors(screen_game, game)
+    
+    # display score of user
+    font = pygame.font.Font(None, 36)
+    score_text = f"Score: {game.get_score()}"
+    score_surface = font.render(score_text, True, (0, 0, 0))
+    screen_game.blit(score_surface, (450, 200))
 
     pygame.display.flip()
     clock.tick(10)
@@ -348,17 +355,6 @@ while Play:
                 Game_Over4 = False
             else:
                 Game_Over4 = True
-                
-        # elif event.key == pygame.K_z:
-        #     if number_can_undo > 0:
-        #         save_for_redo.save_state(game)
-        #         save_for_undo.put_back(game)
-        #         number_can_undo -= 1
-            
-        # elif event.key == pygame.K_x:
-        #     if number_can_redo > 0:
-        #         save_for_redo.put_back(game)
-        #         number_can_redo -= 1
         
         
                 
@@ -381,7 +377,7 @@ while Play:
             else:
                 print("you arrive to limit of redo")
                 
-                
+
     
     if game.has_won() == True:
         print("you have won")
@@ -485,6 +481,14 @@ while Play:
     redo_text = font.render("Redo", True, redo_text_color)
     redo_text_rect = redo_text.get_rect(center=(redo_button_x + redo_button_width // 2, redo_button_y + redo_button_height // 2))
     screen_game.blit(redo_text, redo_text_rect)
+    
+    
+    # display score of user
+    font = pygame.font.Font(None, 36)
+    score_text = f"Score: {game.get_score()}"
+    score_surface = font.render(score_text, True, (0, 0, 0))
+    screen_game.blit(score_surface, (450, 200))
+
 
 
     
