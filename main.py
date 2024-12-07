@@ -91,7 +91,7 @@ screen_height = 450
 
 screen_welcome = pygame.display.set_mode((screen_width, screen_height))
 screen_game = pygame.display.set_mode((screen_width, screen_height))
-screen_Finish = pygame.display.set_mode((screen_width, screen_height))
+screen_Game_Over = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
@@ -152,15 +152,14 @@ Welcome = True
 Play = False
 AI_Mode = False
 sw_random_append = True
-Finish = False
-for_first_time = True
+Game_Over = False
 
 ai_player = AI(game, simulations_per_move=1000)
 
-Game_Over1 = False
-Game_Over2 = False
-Game_Over3 = False
-Game_Over4 = False
+# Game_Over1 = False
+# Game_Over2 = False
+# Game_Over3 = False
+# Game_Over4 = False
 
 while Welcome:
     
@@ -313,48 +312,48 @@ while Play:
             game.move_up()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-                Game_Over1 = False
-                Game_Over2 = False
-                Game_Over3 = False
-                Game_Over4 = False
-            else:
-                Game_Over1 = True
+            #     Game_Over1 = False
+            #     Game_Over2 = False
+            #     Game_Over3 = False
+            #     Game_Over4 = False
+            # else:
+            #     Game_Over1 = True
                 
         elif event.key == pygame.K_DOWN:
             save_for_undo.save_state(game)
             game.move_down()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-                Game_Over1 = False
-                Game_Over2 = False
-                Game_Over3 = False
-                Game_Over4 = False
-            else:
-                Game_Over2 = True
+            #     Game_Over1 = False
+            #     Game_Over2 = False
+            #     Game_Over3 = False
+            #     Game_Over4 = False
+            # else:
+            #     Game_Over2 = True
             
         elif event.key == pygame.K_LEFT:
             save_for_undo.save_state(game)
             game.move_left()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-                Game_Over1 = False
-                Game_Over2 = False
-                Game_Over3 = False
-                Game_Over4 = False
-            else:
-                Game_Over3 = True
+            #     Game_Over1 = False
+            #     Game_Over2 = False
+            #     Game_Over3 = False
+            #     Game_Over4 = False
+            # else:
+            #     Game_Over3 = True
             
         elif event.key == pygame.K_RIGHT:
             save_for_undo.save_state(game)
             game.move_right()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-                Game_Over1 = False
-                Game_Over2 = False
-                Game_Over3 = False
-                Game_Over4 = False
-            else:
-                Game_Over4 = True
+            #     Game_Over1 = False
+            #     Game_Over2 = False
+            #     Game_Over3 = False
+            #     Game_Over4 = False
+            # else:
+            #     Game_Over4 = True
         
         
                 
@@ -382,7 +381,10 @@ while Play:
     if game.has_won() == True:
         print("you have won")
     elif game.has_won() == False:
+        Game_Over = True
+        Play = False
         print("your game is over")
+        
             
     
     
@@ -413,10 +415,10 @@ while Play:
         if attempts > maxAttempts:
             sw_random_append = False
             
-    if Game_Over1 and Game_Over2 and Game_Over3 and Game_Over4: 
-        Play = False
-        Finish = True
-        print("Game Over")
+    # if Game_Over1 and Game_Over2 and Game_Over3 and Game_Over4: 
+    #     Play = False
+    #     Finish = True
+    #     print("Game Over")
         
         
         
@@ -500,14 +502,20 @@ while Play:
 
 
 
-while Finish:
+while Game_Over:
     
-    screen_Finish.fill(GREEN)
+    screen_Game_Over.fill(GREEN)
     
     pygame.event.pump()
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
-        Finish = False
+        Game_Over = False
+        
+    # display game over
+    font = pygame.font.Font(None, 36)
+    score_text = f"Your game is over"
+    score_surface = font.render(score_text, True, (0, 0, 0))
+    screen_Game_Over.blit(score_surface, (250, 250))
         
         
     pygame.display.flip()

@@ -28,32 +28,34 @@ class LinkedList:
         current = self.head.next
         count = 0
 
-        if current:
-            while current:
-                if current.value == 2048:
-                    return True
-                else:
-                    count += 1
-                current = current.next
+        while current:
+            if current.value == 2048:
+                return True
+            count += 1
+            current = current.next
 
-        # if count == 16:
-        #     sw = 0
-        #     arr = [[0] * 4] * 4
-        #     current = self.head.next
-            
-        #     while current:
-        #         for i in range(4):
-        #             for j in range(4):
-        #                 arr[i][j] = current.value
-        #                 current = current.next
-            
-        #     for i in range(3):
-        #         for j in range(3):
-        #             if arr[i][j] == arr[i+1][j] or arr[i][j] == arr[i][j+1]:
-        #                 sw = 1
-            
-        #     if sw == 0:
-        #         return False
+        if count < 16:
+            return None
+
+        grid = [[0 for _ in range(4)] for _ in range(4)]
+        current = self.head.next
+
+        while current:
+            row = (current.number - 1) // 4
+            col = (current.number - 1) % 4
+            grid[row][col] = current.value
+            current = current.next
+
+        for i in range(4):
+            for j in range(4):
+                if j < 3 and grid[i][j] == grid[i][j + 1]:
+                    return None
+                if i < 3 and grid[i][j] == grid[i + 1][j]:
+                    return None
+
+        # the game is over and we can not mave anymore
+        return False
+
             
         
         
