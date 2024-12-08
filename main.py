@@ -92,6 +92,8 @@ def draw_nodes_with_colors(screen, linkedList):
 def show_alert(screen, message):
     WIDTH, HEIGHT = 600, 450
     
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 30)
+    
     # Draw a semi-transparent overlay
     overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     overlay.fill((0, 0, 0, 128))  # Semi-transparent black
@@ -107,7 +109,9 @@ def show_alert(screen, message):
     text = font.render(message, True, PURPLE)
     text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20))
     screen.blit(text, text_rect)
-
+    
+    font = pygame.font.Font(None, 36)
+    
     # OK Button
     button_width, button_height = 100, 40
     button_x, button_y = WIDTH // 2 - button_width // 2, HEIGHT // 2 + 40
@@ -408,7 +412,7 @@ while Play:
                 save_for_undo.put_back(game)
                 number_can_undo -= 1
             else:
-                print("you arrive to limit of undo")
+                show_alert(screen_game, "You have reached the limit of undo!")
                 
         elif (redo_button_x <= mouse_x <= redo_button_x + redo_button_width and
             redo_button_y <= mouse_y <= redo_button_y + redo_button_height):
@@ -416,7 +420,7 @@ while Play:
                 save_for_redo.put_back(game)
                 number_can_redo -= 1
             else:
-                print("you arrive to limit of redo")
+                show_alert(screen_game, "You have reached the limit of redo!")
                 
 
     
