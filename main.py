@@ -59,6 +59,14 @@ def get_tile_color(value):
         return (255, 255, 255)
 
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
+RED = (195, 0, 0)
+GREEN = (50, 149, 0)
+LIGHT_BROWN = (255, 222, 162)
+PURPLE = (150, 0, 195)
+BACK_GROUND = (60, 164, 255)
 
 
 
@@ -79,6 +87,48 @@ def draw_nodes_with_colors(screen, linkedList):
         screen.blit(text, text_rect)
 
         current = current.next
+        
+
+def show_alert(screen, message):
+    WIDTH, HEIGHT = 600, 450
+    
+    # Draw a semi-transparent overlay
+    overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+    overlay.fill((0, 0, 0, 128))  # Semi-transparent black
+    screen.blit(overlay, (0, 0))
+
+    # Alert box
+    alert_width, alert_height = 400, 200
+    alert_x, alert_y = (WIDTH - alert_width) // 2, (HEIGHT - alert_height) // 2
+    pygame.draw.rect(screen, GRAY, (alert_x, alert_y, alert_width, alert_height))
+    pygame.draw.rect(screen, BLACK, (alert_x, alert_y, alert_width, alert_height), 3)
+
+    # Render the message
+    text = font.render(message, True, PURPLE)
+    text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20))
+    screen.blit(text, text_rect)
+
+    # OK Button
+    button_width, button_height = 100, 40
+    button_x, button_y = WIDTH // 2 - button_width // 2, HEIGHT // 2 + 40
+    pygame.draw.rect(screen, RED, (button_x, button_y, button_width, button_height))
+    pygame.draw.rect(screen, BLACK, (button_x, button_y, button_width, button_height), 3)
+    button_text = font.render("OK", True, WHITE)
+    button_text_rect = button_text.get_rect(center=(button_x + button_width // 2, button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
+    pygame.display.flip()
+
+    # Wait for user to click OK
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = event.pos
+                if button_x <= mouse_x <= button_x + button_width and button_y <= mouse_y <= button_y + button_height:
+                    return  # Close the alert
             
 
 
@@ -96,15 +146,6 @@ screen_Game_Over = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
-
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
-RED = (195, 0, 0)
-GREEN = (50, 149, 0)
-LIGHT_BROWN = (255, 222, 162)
-PURPLE = (150, 0, 195)
-BACK_GROUND = (60, 164, 255)
 
 play_button_color = (70, 130, 180)
 play_button_hover_color = (100, 149, 237)
@@ -253,6 +294,13 @@ while AI_Mode:
 
     if game.has_changed(first_state):
         sw_random_append = True
+        
+        
+    if game.has_won() == True:
+        show_alert(screen_game, "You won!")
+    elif game.has_won() == False:
+        show_alert(screen_game, "Game over!")
+
 
     # Define the numbers and their corresponding probabilities
     numbers = [2, 4]
@@ -373,11 +421,9 @@ while Play:
 
     
     if game.has_won() == True:
-        print("you have won")
+        show_alert(screen_game, "You won!")
     elif game.has_won() == False:
-        Game_Over = True
-        Play = False
-        print("your game is over")
+        show_alert(screen_game, "Game over!")
         
             
     
@@ -488,38 +534,6 @@ while Play:
     score_surface = font.render(score_text, True, (0, 0, 0))
     screen_game.blit(score_surface, (450, 200))
 
-
-
     
     pygame.display.flip()
     clock.tick(60)
-    
-    
-
-
-
-
-while Game_Over:
-    
-    screen_Game_Over.fill(GREEN)
-    
-    pygame.event.pump()
-    event = pygame.event.wait()
-    if event.type == pygame.QUIT:
-        Game_Over = False
-        
-    # display game over
-    font = pygame.font.Font(None, 36)
-    score_text = f"Your game is over"
-    score_surface = font.render(score_text, True, (0, 0, 0))
-    screen_Game_Over.blit(score_surface, (250, 250))
-        
-        
-    pygame.display.flip()
-    clock.tick(60)
-    
-    
-
-
-pygame.quit()
-sys.exit()
