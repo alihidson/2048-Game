@@ -154,12 +154,9 @@ AI_Mode = False
 sw_random_append = True
 Game_Over = False
 
-ai_player = AI(game, simulations_per_move=1000)
+first_add_node = True
 
-# Game_Over1 = False
-# Game_Over2 = False
-# Game_Over3 = False
-# Game_Over4 = False
+ai_player = AI(game, simulations_per_move=1000)
 
 while Welcome:
     
@@ -257,18 +254,39 @@ while AI_Mode:
     if game.has_changed(first_state):
         sw_random_append = True
 
-    if sw_random_append:
-        value_created_with_chance = random.choices([2, 4], weights=[70, 30], k=1)[0]
-        attempts = 0
-        max_attempts = 50
-        while sw_random_append:
-            node_number_created_with_chance = random.randint(1, 16)
-            if game.check_node_empty(node_number_created_with_chance):
-                game.add_node(node_number_created_with_chance, value_created_with_chance)
+    # Define the numbers and their corresponding probabilities
+    numbers = [2, 4]
+    weights = [70, 30]
+    
+    # Generate a random choice with the given probabilities
+    value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
+    if first_add_node:
+        value_created_with_chance_2 = random.choices(numbers, weights=weights, k=1)[0]
+    
+    
+    attempts = 0
+    maxAttempts = 50
+        
+    while sw_random_append == True:
+        
+        # Generate a random integer between 1 and 16 (inclusive)
+        node_number_created_with_chance = random.randint(1, 16)
+        if first_add_node:
+            node_number_created_with_chance_2 = random.randint(1, 16)
+        
+        if game.check_node_empty(node_number_created_with_chance) == True:
+            game.add_node(node_number_created_with_chance, value_created_with_chance)
+            if first_add_node:
+                if game.check_node_empty(node_number_created_with_chance_2) == True:
+                    game.add_node(node_number_created_with_chance_2, value_created_with_chance_2)
+                    first_add_node = False
+            if first_add_node == False:
                 sw_random_append = False
-            attempts += 1
-            if attempts > max_attempts:
-                sw_random_append = False
+        
+        attempts += 1
+        # avoid to infinity loop
+        if attempts > maxAttempts:
+            sw_random_append = False
 
 
     screen_game.fill(BACK_GROUND)
@@ -312,48 +330,24 @@ while Play:
             game.move_up()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-            #     Game_Over1 = False
-            #     Game_Over2 = False
-            #     Game_Over3 = False
-            #     Game_Over4 = False
-            # else:
-            #     Game_Over1 = True
                 
         elif event.key == pygame.K_DOWN:
             save_for_undo.save_state(game)
             game.move_down()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-            #     Game_Over1 = False
-            #     Game_Over2 = False
-            #     Game_Over3 = False
-            #     Game_Over4 = False
-            # else:
-            #     Game_Over2 = True
             
         elif event.key == pygame.K_LEFT:
             save_for_undo.save_state(game)
             game.move_left()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-            #     Game_Over1 = False
-            #     Game_Over2 = False
-            #     Game_Over3 = False
-            #     Game_Over4 = False
-            # else:
-            #     Game_Over3 = True
             
         elif event.key == pygame.K_RIGHT:
             save_for_undo.save_state(game)
             game.move_right()
             if game.has_changed(first_state) == True:
                 sw_random_append = True
-            #     Game_Over1 = False
-            #     Game_Over2 = False
-            #     Game_Over3 = False
-            #     Game_Over4 = False
-            # else:
-            #     Game_Over4 = True
         
         
                 
@@ -395,7 +389,8 @@ while Play:
     
     # Generate a random choice with the given probabilities
     value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
-    
+    if first_add_node:
+        value_created_with_chance_2 = random.choices(numbers, weights=weights, k=1)[0]
     
     
     attempts = 0
@@ -405,20 +400,22 @@ while Play:
         
         # Generate a random integer between 1 and 16 (inclusive)
         node_number_created_with_chance = random.randint(1, 16)
+        if first_add_node:
+            node_number_created_with_chance_2 = random.randint(1, 16)
         
         if game.check_node_empty(node_number_created_with_chance) == True:
             game.add_node(node_number_created_with_chance, value_created_with_chance)
-            sw_random_append = False
+            if first_add_node:
+                if game.check_node_empty(node_number_created_with_chance_2) == True:
+                    game.add_node(node_number_created_with_chance_2, value_created_with_chance_2)
+                    first_add_node = False
+            if first_add_node == False:
+                sw_random_append = False
         
         attempts += 1
         # avoid to infinity loop
         if attempts > maxAttempts:
             sw_random_append = False
-            
-    # if Game_Over1 and Game_Over2 and Game_Over3 and Game_Over4: 
-    #     Play = False
-    #     Finish = True
-    #     print("Game Over")
         
         
         
