@@ -133,9 +133,44 @@ def show_alert(screen, message):
                 mouse_x, mouse_y = event.pos
                 if button_x <= mouse_x <= button_x + button_width and button_y <= mouse_y <= button_y + button_height:
                     return  # Close the alert
+                
+def random_append(game, sw_random_append, first_add_node):
+    # Define the numbers and their corresponding probabilities
+    numbers = [2, 4]
+    weights = [70, 30]
+    
+    # Generate a random choice with the given probabilities
+    value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
+    if first_add_node:
+        value_created_with_chance_2 = random.choices(numbers, weights=weights, k=1)[0]
+    
+    
+    attempts = 0
+    maxAttempts = 50
+        
+    while sw_random_append == True:
+        
+        # Generate a random integer between 1 and 16 (inclusive)
+        node_number_created_with_chance = random.randint(1, 16)
+        if first_add_node:
+            node_number_created_with_chance_2 = random.randint(1, 16)
+        
+        if game.check_node_empty(node_number_created_with_chance) == True:
+            game.add_node(node_number_created_with_chance, value_created_with_chance)
+            if first_add_node:
+                if game.check_node_empty(node_number_created_with_chance_2) == True:
+                    game.add_node(node_number_created_with_chance_2, value_created_with_chance_2)
+                    first_add_node = False
+            if first_add_node == False:
+                sw_random_append = False
+        
+        attempts += 1
+        # avoid to infinity loop
+        if attempts > maxAttempts:
+            sw_random_append = False
+    
+    return sw_random_append, first_add_node
             
-
-
 
 
 
@@ -145,7 +180,7 @@ screen_height = 450
 
 screen_welcome = pygame.display.set_mode((screen_width, screen_height))
 screen_game = pygame.display.set_mode((screen_width, screen_height))
-screen_Game_Over = pygame.display.set_mode((screen_width, screen_height))
+# screen_Game_Over = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
@@ -186,9 +221,9 @@ font = pygame.font.Font(None, 36)
 
 
 game = LinkedList()
-
 save_for_undo = Deque()
 save_for_redo = Deque()
+ai_player = AI(game, simulations_per_move=1000)
 
 number_can_undo = 5
 number_can_redo = 5
@@ -201,7 +236,6 @@ Game_Over = False
 
 first_add_node = True
 
-ai_player = AI(game, simulations_per_move=1000)
 
 while Welcome:
     
@@ -275,8 +309,7 @@ while Welcome:
         
     pygame.display.flip()
     clock.tick(60)
-    
-    
+        
 
 
 while AI_Mode:
@@ -304,41 +337,9 @@ while AI_Mode:
         show_alert(screen_game, "You won!")
     elif game.has_won() == False:
         show_alert(screen_game, "Game over!")
-
-
-    # Define the numbers and their corresponding probabilities
-    numbers = [2, 4]
-    weights = [70, 30]
-    
-    # Generate a random choice with the given probabilities
-    value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
-    if first_add_node:
-        value_created_with_chance_2 = random.choices(numbers, weights=weights, k=1)[0]
-    
-    
-    attempts = 0
-    maxAttempts = 50
         
-    while sw_random_append == True:
-        
-        # Generate a random integer between 1 and 16 (inclusive)
-        node_number_created_with_chance = random.randint(1, 16)
-        if first_add_node:
-            node_number_created_with_chance_2 = random.randint(1, 16)
-        
-        if game.check_node_empty(node_number_created_with_chance) == True:
-            game.add_node(node_number_created_with_chance, value_created_with_chance)
-            if first_add_node:
-                if game.check_node_empty(node_number_created_with_chance_2) == True:
-                    game.add_node(node_number_created_with_chance_2, value_created_with_chance_2)
-                    first_add_node = False
-            if first_add_node == False:
-                sw_random_append = False
-        
-        attempts += 1
-        # avoid to infinity loop
-        if attempts > maxAttempts:
-            sw_random_append = False
+            
+    sw_random_append, first_add_node = random_append(game, sw_random_append, first_add_node)
 
 
     screen_game.fill(BACK_GROUND)
@@ -360,9 +361,6 @@ while AI_Mode:
     pygame.display.flip()
     clock.tick(10)
 
-    
-    
-    
     
 
 while Play:
@@ -430,45 +428,8 @@ while Play:
         show_alert(screen_game, "Game over!")
         
             
+    sw_random_append, first_add_node = random_append(game, sw_random_append, first_add_node)
     
-    
-    
-    # Define the numbers and their corresponding probabilities
-    numbers = [2, 4]
-    weights = [70, 30]
-    
-    # Generate a random choice with the given probabilities
-    value_created_with_chance = random.choices(numbers, weights=weights, k=1)[0]
-    if first_add_node:
-        value_created_with_chance_2 = random.choices(numbers, weights=weights, k=1)[0]
-    
-    
-    attempts = 0
-    maxAttempts = 50
-        
-    while sw_random_append == True:
-        
-        # Generate a random integer between 1 and 16 (inclusive)
-        node_number_created_with_chance = random.randint(1, 16)
-        if first_add_node:
-            node_number_created_with_chance_2 = random.randint(1, 16)
-        
-        if game.check_node_empty(node_number_created_with_chance) == True:
-            game.add_node(node_number_created_with_chance, value_created_with_chance)
-            if first_add_node:
-                if game.check_node_empty(node_number_created_with_chance_2) == True:
-                    game.add_node(node_number_created_with_chance_2, value_created_with_chance_2)
-                    first_add_node = False
-            if first_add_node == False:
-                sw_random_append = False
-        
-        attempts += 1
-        # avoid to infinity loop
-        if attempts > maxAttempts:
-            sw_random_append = False
-        
-        
-        
     
     screen_game.fill(BACK_GROUND)
     
@@ -481,13 +442,9 @@ while Play:
             pygame.draw.rect(screen_game, PURPLE, (x, y, cell_size, cell_size), 5)
             
             
-            
     pygame.draw.rect(screen_game, PURPLE, (40, 40, 360, 360), 10) # x, y, width, height
 
-
-
     draw_nodes_with_colors(screen_game, game)
-    
     
     
     mouse_x, mouse_y = pygame.mouse.get_pos()
