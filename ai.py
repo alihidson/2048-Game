@@ -40,10 +40,7 @@ class AI:
         
         return temp_game.get_score()
     
-    
-    
-    
-    
+   
     def find_best_move(self):
         
         directions = ['UP', 'DOWN', 'LEFT', 'RIGHT']

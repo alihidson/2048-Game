@@ -186,34 +186,34 @@ pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
 
-play_button_color = (70, 130, 180)
-play_button_hover_color = (100, 149, 237)
+play_button_color = (178, 102, 255)
+play_button_hover_color = (51, 255, 51)
 play_button_shadow_color = (40, 80, 150)
-play_text_color = (255, 255, 255)
-play_button_x, play_button_y = 250, 100
+play_text_color = (0, 0, 204)
+play_button_x, play_button_y = 250, 200
 play_button_width, play_button_height = 100, 60
 
-ai_button_color = (70, 130, 180)
-ai_button_hover_color = (100, 149, 237)
+ai_button_color = (178, 102, 255)
+ai_button_hover_color = (51, 255, 51)
 ai_button_shadow_color = (40, 80, 150)
-ai_text_color = (255, 255, 255)
+ai_text_color = (0, 0, 204)
 ai_button_x, ai_button_y = 250, 300
 ai_button_width, ai_button_height = 100, 60
 
 
 
 
-undo_button_color = (70, 130, 180)
-undo_button_hover_color = (100, 149, 237)
+undo_button_color = (178, 102, 255)
+undo_button_hover_color = (51, 255, 51)
 undo_button_shadow_color = (40, 80, 150)
-undo_text_color = (255, 255, 255)
+undo_text_color = (0, 0, 204)
 undo_button_x, undo_button_y = 450, 100
 undo_button_width, undo_button_height = 100, 60
 
-redo_button_color = (70, 130, 180)
-redo_button_hover_color = (100, 149, 237)
+redo_button_color = (178, 102, 255)
+redo_button_hover_color = (51, 255, 51)
 redo_button_shadow_color = (40, 80, 150)
-redo_text_color = (255, 255, 255)
+redo_text_color = (0, 0, 204)
 redo_button_x, redo_button_y = 450, 300
 redo_button_width, redo_button_height = 100, 60
 
@@ -239,7 +239,7 @@ first_add_node = True
 
 while Welcome:
     
-    screen_welcome.fill(BACK_GROUND)
+    screen_welcome.fill((255, 128, 0))
     
     pygame.event.pump()
     event = pygame.event.wait()
@@ -261,8 +261,20 @@ while Welcome:
             Welcome = False
             AI_Mode = True
         
+        
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 80)
+    score_text = "Welcome"
+    score_surface = font.render(score_text, True, (204, 0, 102))
+    screen_game.blit(score_surface, (180, 30))
     
     
+    font = pygame.font.Font("./Font/PinyonScript-Regular.ttf", 60)
+    score_text = "Choose the player"
+    score_surface = font.render(score_text, True, (0, 153, 0))
+    screen_game.blit(score_surface, (120, 115))
+    
+    
+    font = pygame.font.Font(None, 36)
     mouse_x, mouse_y = pygame.mouse.get_pos()
     
     # button for Play user
@@ -275,12 +287,12 @@ while Welcome:
     pygame.draw.rect(screen_welcome, current_button_color,
                      (play_button_x, play_button_y, play_button_width, play_button_height), border_radius=10)
 
-    border_color = (255, 255, 255)
+    border_color = (0, 0, 204)
     border_thickness = 2
     pygame.draw.rect(screen_welcome, border_color,
                      (play_button_x, play_button_y, play_button_width, play_button_height), border_radius=10, width=border_thickness)
 
-    play_text = font.render("Play", True, undo_text_color)
+    play_text = font.render("User", True, undo_text_color)
     play_text_rect = play_text.get_rect(center=(play_button_x + play_button_width // 2, play_button_y + play_button_height // 2))
     screen_welcome.blit(play_text, play_text_rect)
     
@@ -296,7 +308,7 @@ while Welcome:
     pygame.draw.rect(screen_welcome, current_button_color,
                      (ai_button_x, ai_button_y, ai_button_width, ai_button_height), border_radius=10)
 
-    border_color = (255, 255, 255)
+    border_color = (0, 0, 204)
     border_thickness = 2
     pygame.draw.rect(screen_welcome, border_color,
                      (ai_button_x, ai_button_y, ai_button_width, ai_button_height), border_radius=10, width=border_thickness)
@@ -369,7 +381,6 @@ while Play:
     
     first_state = game.to_array()
     
-
     event = pygame.event.wait()
     if event.type == pygame.QUIT:
         Play = False
@@ -430,7 +441,6 @@ while Play:
             
     sw_random_append, first_add_node = random_append(game, sw_random_append, first_add_node)
     
-    
     screen_game.fill(BACK_GROUND)
     
         
@@ -459,7 +469,7 @@ while Play:
     pygame.draw.rect(screen_game, current_button_color,
                      (undo_button_x, undo_button_y, undo_button_width, undo_button_height), border_radius=10)
 
-    border_color = (255, 255, 255)
+    border_color = (0, 0, 204)
     border_thickness = 2
     pygame.draw.rect(screen_game, border_color,
                      (undo_button_x, undo_button_y, undo_button_width, undo_button_height), border_radius=10, width=border_thickness)
@@ -479,7 +489,7 @@ while Play:
     pygame.draw.rect(screen_game, current_button_color,
                      (redo_button_x, redo_button_y, redo_button_width, redo_button_height), border_radius=10)
 
-    border_color = (255, 255, 255)
+    border_color = (0, 0, 204)
     border_thickness = 2
     pygame.draw.rect(screen_game, border_color,
                      (redo_button_x, redo_button_y, redo_button_width, redo_button_height), border_radius=10, width=border_thickness)

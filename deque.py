@@ -5,21 +5,16 @@ class Deque:
         self.max_number = 5 
         
         
-        
-        
     def save_state(self, linkedList):
         
         state = linkedList.to_array()
         self.save.append(state)
         
-        
         if len(self.save) > self.max_number:
             self.save.pop(0)
             
             
-            
     def put_back(self, linkedList):
-        
         
         if self.save:
             
@@ -28,4 +23,3 @@ class Deque:
             
             for number, value in last_state:
                 linkedList.add_node(number, value)
-                

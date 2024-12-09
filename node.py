@@ -6,4 +6,3 @@ class Node:
         
         self.next = None
         self.prev = None
-    

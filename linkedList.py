@@ -56,8 +56,6 @@ class LinkedList:
         # the game is over and we can not mave anymore
         return False
 
-            
-        
         
 
     def add_node(self, number, value):
@@ -80,8 +78,6 @@ class LinkedList:
             
     
     
-    
-    
     def check_node_empty(self, input_number):
         
         current = self.head.next
@@ -98,8 +94,6 @@ class LinkedList:
         
         
         
-        
-    
     
     def to_array(self):
         result = []
@@ -109,9 +103,6 @@ class LinkedList:
             result.append((current.number, current.value))
             current = current.next
         return result
-    
-    
-    
     
     
     
@@ -125,9 +116,6 @@ class LinkedList:
         
         
         
-        
-        
-        
     def remove_zero_nodes(self):
         current = self.head.next
         while current:
@@ -136,11 +124,6 @@ class LinkedList:
                 if current.next:
                     current.next.prev = current.prev
             current = current.next
-        
-        
-        
-        
-        
         
         
     def move_up(self):
